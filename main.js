@@ -50,28 +50,30 @@ function createWindow () {
   brokenHiddenWindow.on('show', () => console.log('brokenHiddenWindow on show'))
   brokenHiddenWindow.on('hide', () => console.log('brokenHiddenWindow on hide'))
 
-  // Setting parent window latent fixes not triggering ready-to-show but makes the window show even though it is set to false
-  brokenHiddenWindow2 = new BrowserWindow({width: 800, height: 600, show: false})
-  brokenHiddenWindow2.loadURL(url.format({ pathname: path.join(__dirname, 'index-broken2.html'), protocol: 'file:', slashes: true }))
-  brokenHiddenWindow2.on('ready-to-show', () => {
-    console.log('brokenHiddenWindow2 on ready-to-show')
-    brokenHiddenWindow2.setParentWindow(mainWindow)
-  })
-  brokenHiddenWindow2.on('show', () => console.log('brokenHiddenWindow2 on show'))
-  brokenHiddenWindow2.on('hide', () => console.log('brokenHiddenWindow2 on hide'))
+  if (process.platform !== 'win32'){
+    // Setting parent window latent fixes not triggering ready-to-show but makes the window show even though it is set to false
+    brokenHiddenWindow2 = new BrowserWindow({width: 800, height: 600, show: false})
+    brokenHiddenWindow2.loadURL(url.format({ pathname: path.join(__dirname, 'index-broken2.html'), protocol: 'file:', slashes: true }))
+    brokenHiddenWindow2.on('ready-to-show', () => {
+      console.log('brokenHiddenWindow2 on ready-to-show')
+      brokenHiddenWindow2.setParentWindow(mainWindow)
+    })
+    brokenHiddenWindow2.on('show', () => console.log('brokenHiddenWindow2 on show'))
+    brokenHiddenWindow2.on('hide', () => console.log('brokenHiddenWindow2 on hide'))
 
-  // Setting parent window latent fixes not triggering ready-to-show but makes the window show even though it is set to false
-  brokenHiddenWindow3 = new BrowserWindow({width: 800, height: 600, show: false})
-  brokenHiddenWindow3.loadURL(url.format({ pathname: path.join(__dirname, 'index-broken3.html'), protocol: 'file:', slashes: true }))
-  brokenHiddenWindow3.on('ready-to-show', () => {
-    console.log('brokenHiddenWindow3 on ready-to-show')
-    brokenHiddenWindow3.setParentWindow(mainWindow)
-    // using hide() afterwards makes it hide finally, yet the hide event is not triggered
-    console.log('hide brokenHiddenWindow3')
-    brokenHiddenWindow3.hide()
-  })
-  brokenHiddenWindow3.on('show', () => console.log('brokenHiddenWindow3 on show'))
-  brokenHiddenWindow3.on('hide', () => console.log('brokenHiddenWindow3 on hide'))
+    // Setting parent window latent fixes not triggering ready-to-show but makes the window show even though it is set to false
+    brokenHiddenWindow3 = new BrowserWindow({width: 800, height: 600, show: false})
+    brokenHiddenWindow3.loadURL(url.format({ pathname: path.join(__dirname, 'index-broken3.html'), protocol: 'file:', slashes: true }))
+    brokenHiddenWindow3.on('ready-to-show', () => {
+      console.log('brokenHiddenWindow3 on ready-to-show')
+      brokenHiddenWindow3.setParentWindow(mainWindow)
+      // using hide() afterwards makes it hide finally, yet the hide event is not triggered
+      console.log('hide brokenHiddenWindow3')
+      brokenHiddenWindow3.hide()
+    })
+    brokenHiddenWindow3.on('show', () => console.log('brokenHiddenWindow3 on show'))
+    brokenHiddenWindow3.on('hide', () => console.log('brokenHiddenWindow3 on hide'))
+  }
 }
 
 // This method will be called when Electron has finished
